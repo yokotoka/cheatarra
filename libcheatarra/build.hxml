@@ -1,0 +1,17 @@
+#-python bin/cheatarra.py
+-cp src
+-main cheatarra.Main
+-debug
+-lib thx.core
+#-lib stdlib
+
+--each
+
+-neko release/cheatarra.n
+--next
+
+-python release/cheatarra.py
+--next
+
+-js release/cheatarra.js
+
