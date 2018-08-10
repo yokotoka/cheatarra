@@ -1,16 +1,20 @@
 package cheatarra;
 
+import cheatarra.StorageTypes.TCheatarraFreatboard;
 import thx.Ints;
 import thx.Error;
 
-import cheatarra.Common.Storeable;
+import cheatarra.StorageTypes.Storeable;
 import cheatarra.Theory.Note;
-import cheatarra.Theory.Const;
+import cheatarra.Common.Const;
 import cheatarra.Theory.Tuning;
 import cheatarra.Common.TLedsScheme;
+import cheatarra.StorageTypes.TTuning;
+import cheatarra.StorageTypes.TFretboard;
 
-typedef TString = Array<Note>;
-typedef TFretboard = Array<TString>;
+typedef StringNotes = Array<Note>;
+typedef FretboardStrings = Array<StringNotes>;
+typedef TLedNoteMap = Map<Int, Note>;
 
 
 @:keep
@@ -18,7 +22,7 @@ class Fretboard extends Storeable {
     public var tuning:Tuning;
     public var strings(default,null):Int;
     public var frets(default,null):Int;
-    public var notesScheme(default,null):TFretboard;
+    public var notesScheme(default,null):FretboardStrings;
 
     public function new(tuning:Tuning, ?strings:Int, ?frets:Int) {
         this.strings = (strings == null) ? Const.STRINGS_COUNT : strings;
@@ -29,14 +33,14 @@ class Fretboard extends Storeable {
         if (this.strings != tuning.scheme.length) {
             throw new Error('Mismatch tuning(${tuning.scheme.length}) and strings($strings) count');
         }
-        this.notesScheme = new TFretboard();
+        this.notesScheme = new FretboardStrings();
         this.set_tuning(tuning);
     }
     
     public function set_tuning(tuning:Tuning) {
         this.tuning = tuning;
         for (stringIdx in Ints.range(this.strings)) {
-            this.notesScheme.insert(stringIdx, new TString());
+            this.notesScheme.insert(stringIdx, new StringNotes());
             for (fretIdx in Ints.range(this.frets)) {
                 var currentNote = null;
                 if (fretIdx == 0) {
@@ -48,6 +52,19 @@ class Fretboard extends Storeable {
             }
         }
     }
+
+    override public function toObj(): TFretboard {
+        var result:TFretboard = {
+            tuning: this.tuning.toObj(), 
+            strings: this.strings,
+            frets: this.frets,
+        }
+        return result;
+    }
+
+    override public static function ofObj(o:TFretboard): Fretboard {
+        return new Fretboard(Tuning.ofObj(o.tuning), o.strings, o.frets);
+    }   
 
     override public function toString() {
         var fretboard = '';
@@ -68,11 +85,11 @@ class Fretboard extends Storeable {
 @:keep
 class CheatarraFreatboard extends Fretboard {
     public var ledsScheme(default,null):TLedsScheme;
-    public var ledNoteMap(default,null):Map<Int, Note>;
+    public var ledNoteMap(default,null):TLedNoteMap;
 
     public function new(tuning:Tuning, ?strings:Int, ?frets:Int, ?ledsScheme:TLedsScheme) {
         this.ledsScheme = (ledsScheme == null) ? Const.LEDS_SCHEME : ledsScheme; //IT MUST BE BEFORE super()!!!
-        this.ledNoteMap = new Map<Int, Note>(); //IT MUST BE BEFORE super()!!!
+        this.ledNoteMap = new TLedNoteMap(); //IT MUST BE BEFORE super()!!!
 
         super(tuning, strings, frets);
 
@@ -96,6 +113,24 @@ class CheatarraFreatboard extends Fretboard {
                     this.notesScheme[stringIdx][fretIdx]);
             }
         }
+    }
+
+    override public function toObj(): TCheatarraFreatboard {
+        var result:TCheatarraFreatboard = {
+            tuning: this.tuning.toObj(), 
+            strings: this.strings,
+            frets: this.frets,
+            ledsScheme: this.ledsScheme,
+        }
+        return result;
+    }
+
+    override public static function ofObj(o:TCheatarraFreatboard): CheatarraFreatboard {
+        return new CheatarraFreatboard(Tuning.ofObj(o.tuning), o.strings, o.frets, o.ledsScheme);
+    }
+
+    public function draw(o:Dynamic) {
+
     }
 
 }

@@ -1,17 +1,19 @@
 package cheatarra;
 
-import cheatarra.Common.TTuning;
+import cheatarra.Fretboard.CheatarraFreatboard;
+using StringTools;
+
+import cheatarra.StorageTypes.TTuning;
 import cheatarra.Theory.Tuning;
 import cheatarra.Theory.Key;
-import cheatarra.Common.TKey;
+import cheatarra.StorageTypes.TKey;
 import cheatarra.Theory.Scale;
 //import cheatarra.Common.Jsonable;
-import cheatarra.Theory.Const;
+import cheatarra.Common.Const;
 import cheatarra.Common.Interval;
 import cheatarra.Common.Misc;
 import cheatarra.Theory.Note;
 import cheatarra.Fretboard.Fretboard;
-using StringTools;
 
 
 @:keep
@@ -42,8 +44,9 @@ class Main {
         trace(Tuning.ofObj(tuning));
         trace(haxe.Json.stringify(Tuning.ofObj(tuning).toObj()));
 
-        var fb:Fretboard = new Fretboard(Tuning.ofObj(tuning));
+        var fb:CheatarraFreatboard = new CheatarraFreatboard(Tuning.ofObj(tuning));
         trace(Std.string(fb));
+        trace(haxe.Json.stringify(fb.toObj()));
 
         //trace(Std.string())
 //        var n = Note.load('a_2');

@@ -3,6 +3,7 @@
 -main cheatarra.Main
 -debug
 -lib thx.core
+-lib thx.color
 #-lib tjson
 #-lib stdlib
 
