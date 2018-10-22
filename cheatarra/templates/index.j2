@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cheatarra</title>
+
+    <script src="{{ url_for('static', filename='vue.js') }}"></script>
+{#    <script src="{{ url_for('static', filename='fetch.min.js') }}"></script>#}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vue-ui.css') }}">
+
+</head>
+<body>
+    {% raw %}
+    <div id="app">
+        <p> {{ cur_note }}:{{ cur_scale }}:{{ cur_tuning }}
+        <div>
+            <button v-for="note in notes" v-on:click="pick_note">{{ note }}</button>
+        </div>
+
+        <div>
+            <button v-for="scale in scales" v-on:click="pick_scale">{{ scale }}</button>
+        </div>
+        
+        <div>
+            <button v-for="tuning in tunings" v-on:click="pick_tuning">{{ tuning }}</button>
+        </div>
+        
+        
+
+
+
+    </div>
+    {% endraw %}
+    <script src="/cheatarra.js"></script>
+</body>
+</html>
