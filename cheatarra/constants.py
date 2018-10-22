@@ -17,7 +17,7 @@ Bb = AbstractNote('A#', {'Bb'})
 B = AbstractNote('B')
 
 
-COLORS = (c.RED1, c.ORANGE, c.YELLOW1, c.GREEN, c.CYAN2, c.BLUE, c.VIOLETRED)
+COLORS = (c.RED1, c.ORANGERED1, c.YELLOW1, c.GREEN, c.CYAN2, c.BLUE, c.VIOLETRED)
 
 OCTAVE = (C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B)
 

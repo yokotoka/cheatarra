@@ -85,3 +85,7 @@ def cheatarra_json():
               for tuning, note, scale in all_variants},
     )
     return jsonify(out)
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80)

@@ -1,9 +1,11 @@
-import json
-from collections import defaultdict
-from itertools import product, chain
-from pprint import pprint
-from typing import NamedTuple, Set, Tuple, List, Dict
-import cheatarra.colors as c
+import sys
+
+if hasattr(sys, 'implementation') and hasattr(sys.implementation, 'name') and sys.implementation.name == 'micropython':
+    pass
+else:
+    from collections import defaultdict
+    from itertools import product, chain
+    import cheatarra.colors as c
 
 
 class AbstractNote:
